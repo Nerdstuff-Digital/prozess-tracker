@@ -4,10 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Prozess Tracker</title>
+    <meta name="theme-color" content="rgb(6, 23, 30)">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link rel="manifest" href="manifest.json">
+    <link rel="icon" type="image/png" href="img/logo-cyber-d20.png">
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="styles/header.css">
-    <link rel="icon" type="image/png" href="img/logo-cyber-d20.png">
-    
 </head>
 <body>
 
@@ -64,6 +68,33 @@
             </div>
         </main>
     </div>
+
+    <nav class="bottom-nav" id="bottom-nav">
+        <button class="tab-btn active" data-col="bestellungen">
+            <img src="img/icons/inbox.svg" alt="Bestellungen">
+            <span>Bestellungen</span>
+            <span class="tab-badge" id="badge-bestellungen"></span>
+        </button>
+        <button class="tab-btn" data-col="in-arbeit">
+            <img src="img/icons/gear.svg" alt="In Arbeit">
+            <span>In Arbeit</span>
+            <span class="tab-badge" id="badge-in-arbeit"></span>
+        </button>
+        <button class="tab-btn" data-col="versand">
+            <img src="img/icons/truck.svg" alt="Versand">
+            <span>Versand</span>
+            <span class="tab-badge" id="badge-versand"></span>
+        </button>
+        <button class="tab-btn" data-col="abgeschlossen">
+            <img src="img/icons/checkmark.svg" alt="Abgeschlossen">
+            <span>Fertig</span>
+            <span class="tab-badge" id="badge-abgeschlossen"></span>
+        </button>
+    </nav>
+
+    <button class="fab" id="fab" title="Neue Bestellung">
+        <img src="img/icons/plus-icon.svg" alt="Hinzufügen">
+    </button>
 
     <dialog id="order-dialog" aria-labelledby="dialog-title">
         <div class="dialog-header">

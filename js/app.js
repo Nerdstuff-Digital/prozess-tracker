@@ -11,13 +11,13 @@ import {
     serverTimestamp
 } from './firebase.js';
 
-import { initDialog, openDialog }           from './dialog.js';
+import { initDialog, openDialog }            from './dialog.js';
 import { initDragDrop, refreshCardListeners } from './dragdrop.js';
 import { initNotifications, notify, diffOrders, getStatusNotification } from './notifications.js';
 
 const COLUMNS = ['bestellungen', 'in-arbeit', 'versand', 'abgeschlossen'];
 
-let _previousOrders = new Map();
+let _previousOrders  = new Map();
 let _isFirstSnapshot = true;
 
 async function loadHeader() {
@@ -26,8 +26,7 @@ async function loadHeader() {
     try {
         const res = await fetch('pages/header.html');
         if (!res.ok) return;
-        const html = await res.text();
-        el.outerHTML = html;
+        el.outerHTML = await res.text();
     } catch {
         return;
     }
@@ -48,20 +47,35 @@ function renderBoard(orders) {
         if (colOrders.length === 0) {
             container.innerHTML = '<p class="empty-hint">Noch keine Einträge</p>';
         } else {
-            colOrders.forEach((order) => {
-                container.appendChild(_createCard(order));
-            });
+            colOrders.forEach((order) => container.appendChild(_createCard(order)));
         }
     });
 
+    updateTabBadges(orders);
     refreshCardListeners();
+}
+
+function updateTabBadges(orders) {
+    COLUMNS.forEach((colId) => {
+        const badge = document.getElementById(`badge-${colId}`);
+        if (!badge) return;
+
+        const count = orders.filter((o) => o.status === colId).length;
+        badge.textContent = count;
+
+        if (count > 0) {
+            badge.classList.add('visible');
+        } else {
+            badge.classList.remove('visible');
+        }
+    });
 }
 
 function _createCard(order) {
     const card = document.createElement('div');
-    card.className   = 'card';
-    card.draggable   = true;
-    card.dataset.id  = order.id;
+    card.className  = 'card';
+    card.draggable  = true;
+    card.dataset.id = order.id;
 
     const prioClass = (order.priority || 'medium').toLowerCase();
     const hasNotes  = order.anmerkungen && order.anmerkungen.trim() !== '';
@@ -93,6 +107,24 @@ function _createCard(order) {
     return card;
 }
 
+function initMobileNav() {
+    setActiveTab('bestellungen');
+
+    document.querySelectorAll('.tab-btn').forEach((btn) => {
+        btn.addEventListener('click', () => setActiveTab(btn.dataset.col));
+    });
+}
+
+function setActiveTab(colId) {
+    document.querySelectorAll('.tab-btn').forEach((btn) => {
+        btn.classList.toggle('active', btn.dataset.col === colId);
+    });
+
+    document.querySelectorAll('.column').forEach((col) => {
+        col.classList.toggle('active-mobile', col.dataset.status === colId);
+    });
+}
+
 async function saveOrder(data, id = null) {
     try {
         if (id) {
@@ -105,6 +137,9 @@ async function saveOrder(data, id = null) {
                 createdAt: serverTimestamp()
             });
             showToast('✓ Bestellung hinzugefügt');
+            if (window.innerWidth < 768) {
+                setActiveTab('bestellungen');
+            }
         }
     } catch (err) {
         console.error('[Prozess Tracker] Fehler beim Speichern:', err);
@@ -152,37 +187,34 @@ async function init() {
     await initNotifications();
 
     initDialog(saveOrder, deleteOrder);
-
     initDragDrop(moveOrder);
+    initMobileNav();
 
     document.querySelectorAll('.add-btn').forEach((btn) => {
         btn.addEventListener('click', () => openDialog('create'));
     });
 
-    const q = query(
-        collection(db, 'orders'),
-        orderBy('createdAt', 'asc')
-    );
+    document.getElementById('fab')?.addEventListener('click', () => openDialog('create'));
+
+    const q = query(collection(db, 'orders'), orderBy('createdAt', 'asc'));
 
     onSnapshot(
         q,
         (snapshot) => {
-            const orders = snapshot.docs.map((d) => ({ id: d.id, ...d.data() }));
-            const ordersMap = new Map(orders.map(o => [o.id, o]));
+            const orders   = snapshot.docs.map((d) => ({ id: d.id, ...d.data() }));
+            const ordersMap = new Map(orders.map((o) => [o.id, o]));
 
             if (_isFirstSnapshot) {
-                _previousOrders = ordersMap;
+                _previousOrders  = ordersMap;
                 _isFirstSnapshot = false;
             } else {
                 const changes = diffOrders(_previousOrders, ordersMap);
-                changes.forEach(change => {
+                changes.forEach((change) => {
                     if (change.type === 'new') {
                         notify('📦 Neue Bestellung', change.order.title);
                     } else if (change.type === 'moved') {
                         const notifData = getStatusNotification(change.order);
-                        if (notifData) {
-                            notify(notifData.title, notifData.body);
-                        }
+                        if (notifData) notify(notifData.title, notifData.body);
                     }
                 });
                 _previousOrders = ordersMap;

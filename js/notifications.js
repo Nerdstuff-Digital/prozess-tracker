@@ -6,7 +6,7 @@ async function initServiceWorker() {
     }
 
     try {
-        _swRegistration = await navigator.serviceWorker.register('sw.js', { scope: '/' });
+        _swRegistration = await navigator.serviceWorker.register('./js/sw.js');
     } catch {
         return;
     }

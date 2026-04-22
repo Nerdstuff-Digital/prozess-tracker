@@ -1,5 +1,5 @@
 .app-header {
-    height: var(--header-height, 80px);
+    height: var(--header-height, 90px);
     background-color: rgba(40, 39, 42, 0.97);
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
@@ -19,7 +19,7 @@
     align-items: center;
     justify-content: space-between;
     height: 100%;
-    padding: 24px 24px 24px 0px;
+    padding: 0 24px 0 0;
     max-width: 1440px;
     margin: 0 auto;
     width: 100%;
@@ -56,4 +56,28 @@
     font-size: 0.82rem;
     color: rgba(255, 255, 255, 0.35);
     font-family: "TextSchrift", sans-serif;
+}
+
+@media (max-width: 767px) {
+
+    .app-header {
+        height: 56px;
+    }
+
+    .header-inner {
+        padding: 0 16px;
+    }
+
+    .header-logo-img {
+        height: 36px;
+        margin: 0 10px 0 0;
+    }
+
+    .header-title {
+        font-size: 1rem;
+    }
+
+    .header-hint {
+        display: none;
+    }
 }

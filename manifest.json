@@ -1,0 +1,22 @@
+{
+    "name": "Prozess Tracker",
+    "short_name": "Tracker",
+    "description": "Bestellungs-Übersicht für Selfmade Nerdstuff",
+    "start_url": "/prozess-tracker/",
+    "display": "standalone",
+    "orientation": "portrait-primary",
+    "background_color": "rgb(6, 23, 30)",
+    "theme_color": "rgb(6, 23, 30)",
+    "icons": [
+        {
+            "src": "img/logo-cyber-d20.png",
+            "sizes": "192x192",
+            "type": "image/png"
+        },
+        {
+            "src": "img/logo-cyber-d20.png",
+            "sizes": "512x512",
+            "type": "image/png"
+        }
+    ]
+}
