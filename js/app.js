@@ -13,8 +13,12 @@ import {
 
 import { initDialog, openDialog }           from './dialog.js';
 import { initDragDrop, refreshCardListeners } from './dragdrop.js';
+import { initNotifications, notify, diffOrders, getStatusNotification } from './notifications.js';
 
 const COLUMNS = ['bestellungen', 'in-arbeit', 'versand', 'abgeschlossen'];
+
+let _previousOrders = new Map();
+let _isFirstSnapshot = true;
 
 async function loadHeader() {
     const el = document.getElementById('header-placeholder');
@@ -145,6 +149,8 @@ function _escapeHtml(str) {
 async function init() {
     await loadHeader();
 
+    await initNotifications();
+
     initDialog(saveOrder, deleteOrder);
 
     initDragDrop(moveOrder);
@@ -162,6 +168,26 @@ async function init() {
         q,
         (snapshot) => {
             const orders = snapshot.docs.map((d) => ({ id: d.id, ...d.data() }));
+            const ordersMap = new Map(orders.map(o => [o.id, o]));
+
+            if (_isFirstSnapshot) {
+                _previousOrders = ordersMap;
+                _isFirstSnapshot = false;
+            } else {
+                const changes = diffOrders(_previousOrders, ordersMap);
+                changes.forEach(change => {
+                    if (change.type === 'new') {
+                        notify('📦 Neue Bestellung', change.order.title);
+                    } else if (change.type === 'moved') {
+                        const notifData = getStatusNotification(change.order);
+                        if (notifData) {
+                            notify(notifData.title, notifData.body);
+                        }
+                    }
+                });
+                _previousOrders = ordersMap;
+            }
+
             renderBoard(orders);
         },
         (err) => {
