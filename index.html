@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prozess Tracker</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="styles/header.css">
+</head>
+<body>
+
+    <!-- Header wird per fetch() aus pages/header.html geladen -->
+    <div id="header-placeholder"></div>
+
+    <div class="app-wrapper">
+
+        <!-- Kanban-Board -->
+        <main class="board">
+            <div class="board-columns">
+
+                <!-- Spalte: Bestellungen -->
+                <div class="column" id="column-bestellungen" data-status="bestellungen">
+                    <div class="column-header" data-col="bestellungen">
+                        <h2>Bestellungen</h2>
+                        <div class="column-header-right">
+                            <span class="column-count" id="count-bestellungen">0</span>
+                            <button class="add-btn" data-col="bestellungen" title="Neue Bestellung hinzufügen">
+                                <img src="img/icons/plus-icon.svg" alt="Hinzufügen">
+                            </button>
+                        </div>
+                    </div>
+                    <div class="column-cards" id="col-bestellungen"></div>
+                </div>
+
+                <!-- Spalte: In Arbeit -->
+                <div class="column" id="column-in-arbeit" data-status="in-arbeit">
+                    <div class="column-header" data-col="in-arbeit">
+                        <h2>In Arbeit</h2>
+                        <div class="column-header-right">
+                            <span class="column-count" id="count-in-arbeit">0</span>
+                        </div>
+                    </div>
+                    <div class="column-cards" id="col-in-arbeit"></div>
+                </div>
+
+                <!-- Spalte: Versand -->
+                <div class="column" id="column-versand" data-status="versand">
+                    <div class="column-header" data-col="versand">
+                        <h2>Versand</h2>
+                        <div class="column-header-right">
+                            <span class="column-count" id="count-versand">0</span>
+                        </div>
+                    </div>
+                    <div class="column-cards" id="col-versand"></div>
+                </div>
+
+                <!-- Spalte: Angekommen / Abgeschlossen -->
+                <div class="column" id="column-abgeschlossen" data-status="abgeschlossen">
+                    <div class="column-header" data-col="abgeschlossen">
+                        <h2>Angekommen / Abgeschlossen</h2>
+                        <div class="column-header-right">
+                            <span class="column-count" id="count-abgeschlossen">0</span>
+                        </div>
+                    </div>
+                    <div class="column-cards" id="col-abgeschlossen"></div>
+                </div>
+
+            </div>
+        </main>
+    </div>
+
+    <!-- Dialog: Bestellung anlegen / bearbeiten -->
+    <dialog id="order-dialog" aria-labelledby="dialog-title">
+        <div class="dialog-header">
+            <h3 id="dialog-title">Neue Bestellung</h3>
+            <button class="delete-btn" id="delete-btn" title="Bestellung löschen" aria-label="Bestellung löschen">
+                <img src="img/icons/bin-icon.svg" alt="Löschen">
+            </button>
+        </div>
+
+        <div class="dialog-body">
+            <div class="form-group">
+                <label for="input-title">Titel</label>
+                <input type="text" id="input-title" placeholder="Name des Produkts …" maxlength="120" autocomplete="off">
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="input-anzahl">Anzahl</label>
+                    <input type="number" id="input-anzahl" min="1" value="1">
+                </div>
+                <div class="form-group">
+                    <label for="input-priority">Priorität</label>
+                    <select id="input-priority">
+                        <option value="High">🔴 High</option>
+                        <option value="Medium" selected>🟡 Medium</option>
+                        <option value="Low">🟢 Low</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="input-anmerkungen">Anmerkungen</label>
+                <textarea id="input-anmerkungen" placeholder="Weitere Hinweise, Links, Details …" rows="4"></textarea>
+            </div>
+        </div>
+
+        <div class="dialog-footer">
+            <button class="btn-cancel" id="btn-cancel">Abbrechen</button>
+            <button class="btn-save" id="btn-save">Speichern</button>
+        </div>
+    </dialog>
+
+    <!-- Toast-Benachrichtigung -->
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+    <!-- Einstiegspunkt: ES-Modul -->
+    <script type="module" src="js/app.js"></script>
+
+</body>
+</html>
