@@ -1,8 +1,3 @@
-/* ============================================================
-   FIREBASE – Initialisierung & Re-Exports
-   Projekt: prozess-tracker-8a35d
-   ============================================================ */
-
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js';
 import {
     getFirestore,
@@ -28,11 +23,8 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 
-/** Firestore-Instanz */
 export const db = getFirestore(app);
 
-/* Firestore-Funktionen weiterexportieren,
-   damit andere Module nur aus ./firebase.js importieren müssen */
 export {
     collection,
     addDoc,

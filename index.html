@@ -9,16 +9,13 @@
 </head>
 <body>
 
-    <!-- Header wird per fetch() aus pages/header.html geladen -->
     <div id="header-placeholder"></div>
 
     <div class="app-wrapper">
 
-        <!-- Kanban-Board -->
         <main class="board">
             <div class="board-columns">
 
-                <!-- Spalte: Bestellungen -->
                 <div class="column" id="column-bestellungen" data-status="bestellungen">
                     <div class="column-header" data-col="bestellungen">
                         <h2>Bestellungen</h2>
@@ -32,7 +29,6 @@
                     <div class="column-cards" id="col-bestellungen"></div>
                 </div>
 
-                <!-- Spalte: In Arbeit -->
                 <div class="column" id="column-in-arbeit" data-status="in-arbeit">
                     <div class="column-header" data-col="in-arbeit">
                         <h2>In Arbeit</h2>
@@ -43,7 +39,6 @@
                     <div class="column-cards" id="col-in-arbeit"></div>
                 </div>
 
-                <!-- Spalte: Versand -->
                 <div class="column" id="column-versand" data-status="versand">
                     <div class="column-header" data-col="versand">
                         <h2>Versand</h2>
@@ -54,7 +49,6 @@
                     <div class="column-cards" id="col-versand"></div>
                 </div>
 
-                <!-- Spalte: Angekommen / Abgeschlossen -->
                 <div class="column" id="column-abgeschlossen" data-status="abgeschlossen">
                     <div class="column-header" data-col="abgeschlossen">
                         <h2>Angekommen / Abgeschlossen</h2>
@@ -69,7 +63,6 @@
         </main>
     </div>
 
-    <!-- Dialog: Bestellung anlegen / bearbeiten -->
     <dialog id="order-dialog" aria-labelledby="dialog-title">
         <div class="dialog-header">
             <h3 id="dialog-title">Neue Bestellung</h3>
@@ -93,8 +86,8 @@
                     <label for="input-priority">Priorität</label>
                     <select id="input-priority">
                         <option value="High">🔴 High</option>
-                        <option value="Medium" selected>🟡 Medium</option>
-                        <option value="Low">🟢 Low</option>
+                        <option value="Medium">🟡 Medium</option>
+                        <option value="Low" selected>🟢 Low</option>
                     </select>
                 </div>
             </div>
@@ -111,10 +104,8 @@
         </div>
     </dialog>
 
-    <!-- Toast-Benachrichtigung -->
     <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
-    <!-- Einstiegspunkt: ES-Modul -->
     <script type="module" src="js/app.js"></script>
 
 </body>

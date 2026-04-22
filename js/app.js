@@ -29,10 +29,6 @@ async function loadHeader() {
     }
 }
 
-/* ============================================================
-   Board-Rendering
-   ============================================================ */
-
 function renderBoard(orders) {
     COLUMNS.forEach((colId) => {
         const container = document.getElementById(`col-${colId}`);

@@ -10,6 +10,8 @@
     width: 100%;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.35);
     flex-shrink: 0;
+    display: flex;
+    justify-content: center;
 }
 
 .header-inner {
@@ -17,8 +19,10 @@
     align-items: center;
     justify-content: space-between;
     height: 100%;
-    padding: 0 180px;
-    max-width: 100%;
+    padding: 24px 24px 24px 0px;
+    max-width: 1440px;
+    margin: 0 auto;
+    width: 100%;
 }
 
 .header-logo {
@@ -31,7 +35,7 @@
     height: 84px;
     width: auto;
     filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.4));
-    margin: 15px;
+    margin: 15px 15px 15px 0;
 }
 
 .header-title {
