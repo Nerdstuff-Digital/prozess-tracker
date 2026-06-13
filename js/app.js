@@ -15,7 +15,7 @@ import { initDialog, openDialog }            from './dialog.js';
 import { initDragDrop, refreshCardListeners } from './dragdrop.js';
 import { initNotifications, notify, diffOrders, getStatusNotification } from './notifications.js';
 
-const COLUMNS = ['bestellungen', 'in-arbeit', 'versand', 'abgeschlossen'];
+const COLUMNS = ['bestellungen', 'in-arbeit', 'fertig-gedruckt', 'versand', 'abgeschlossen'];
 
 let _previousOrders  = new Map();
 let _isFirstSnapshot = true;

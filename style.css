@@ -1,36 +1,85 @@
 @font-face {
-    font-family: "TitelSchrift";
+    font-family: "Figtree-XB";
     src: url("assets/fonts/Figtree-ExtraBold.ttf") format("truetype");
+    font-weight: 800;
     font-display: swap;
 }
 
 @font-face {
-    font-family: "TextSchrift";
+    font-family: "Figtree";
+    src: url("assets/fonts/Figtree-Bold.ttf") format("truetype");
+    font-weight: 700;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "Figtree";
+    src: url("assets/fonts/Figtree-SemiBold.ttf") format("truetype");
+    font-weight: 600;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "Figtree";
+    src: url("assets/fonts/Figtree-Medium.ttf") format("truetype");
+    font-weight: 500;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "Figtree";
     src: url("assets/fonts/Figtree-Regular.ttf") format("truetype");
+    font-weight: 400;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "Figtree";
+    src: url("assets/fonts/Figtree-Light.ttf") format("truetype");
+    font-weight: 300;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "Encode";
+    src: url("assets/fonts/EncodeSansSemiExpanded-Regular.ttf") format("truetype");
+    font-weight: 400;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "Encode";
+    src: url("assets/fonts/EncodeSansSemiExpanded-Bold.ttf") format("truetype");
+    font-weight: 700;
     font-display: swap;
 }
 
 :root {
-    --bg-dark:        rgb(6, 23, 30);
-    --surface:        rgba(40, 39, 42, 0.85);
-    --surface-solid:  rgb(40, 39, 42);
-    --surface-hover:  rgba(40, 39, 42, 0.95);
+    --bg:             #06171E;
+    --bg-2:           #081f29;
+    --surface:        #13242c;
+    --surface-soft:   rgba(19, 36, 44, 0.55);
+    --surface-card:   rgba(19, 36, 44, 0.92);
     --accent:         #2AE1E8;
-    --accent-hover:   #ffffff;
-    --text:           #ffffff;
-    --text-muted:     rgba(255, 255, 255, 0.5);
-    --border:         rgba(255, 255, 255, 0.1);
-    --border-accent:  rgba(42, 225, 232, 0.4);
+    --accent-2:       #1bb8be;
+    --accent-soft:    rgba(42, 225, 232, 0.13);
+    --accent-line:    rgba(42, 225, 232, 0.3);
+    --text:           #eef8fa;
+    --text-muted:     rgba(238, 248, 250, 0.62);
+    --text-faint:     rgba(238, 248, 250, 0.40);
+    --line:           rgba(255, 255, 255, 0.11);
+    --line-2:         rgba(255, 255, 255, 0.06);
     --prio-high:      #ff4d4d;
     --prio-medium:    #ffaa00;
     --prio-low:       #4dff91;
     --shadow:         0 4px 20px rgba(0, 0, 0, 0.4);
-    --shadow-accent:  0 4px 16px rgba(42, 225, 232, 0.15);
+    --shadow-accent:  0 18px 40px -24px rgba(0, 0, 0, 0.85);
     --radius:         8px;
-    --radius-lg:      14px;
-    --header-height:  90px;
-    --sidebar-width:  220px;
-    --transition:     0.2s ease;
+    --radius-lg:      12px;
+    --header-height:  88px;
+    --ease:           cubic-bezier(0.4, 0, 0.15, 1);
+    --transition:     0.25s var(--ease);
+    --icon-accent:    invert(75%) sepia(51%) saturate(1067%) hue-rotate(130deg) brightness(99%) contrast(92%);
 }
 
 *, *::before, *::after {
@@ -45,8 +94,9 @@ html {
 }
 
 body {
-    font-family: "TextSchrift", sans-serif;
-    background-color: var(--bg-dark);
+    font-family: "Figtree", system-ui, sans-serif;
+    font-weight: 300;
+    background-color: var(--bg);
     color: var(--text);
     min-height: 100vh;
     display: flex;
@@ -56,15 +106,30 @@ body {
 }
 
 h1, h2, h3, h4 {
-    font-family: "TitelSchrift", sans-serif;
-    color: var(--text);
-    line-height: 1.2;
+    font-family: "Figtree-XB", sans-serif;
+    font-weight: 800;
+    color: #fff;
+    line-height: 1.1;
+    letter-spacing: -0.01em;
 }
 
 img {
     max-width: 100%;
     height: auto;
     display: block;
+}
+
+::selection {
+    background: var(--accent);
+    color: var(--bg);
+}
+
+.eyebrow {
+    font-family: "Encode", sans-serif;
+    font-weight: 700;
+    font-size: 0.72rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
 }
 
 .app-wrapper {
@@ -78,7 +143,7 @@ main.board {
     flex: 1;
     overflow-x: auto;
     overflow-y: auto;
-    padding: 24px;
+    padding: 28px 24px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -90,28 +155,27 @@ main.board {
     align-items: flex-start;
     min-height: 100%;
     width: 100%;
-    max-width: 1440px;
+    max-width: 1480px;
     margin: 0 auto;
 }
 
 .column {
     flex: 1;
-    min-width: 220px;
-    max-width: 340px;
-    background-color: rgba(40, 39, 42, 0.45);
-    border: 1px solid var(--border);
+    min-width: 200px;
+    max-width: 330px;
+    background-color: var(--surface-soft);
+    border: 1px solid var(--line);
     border-radius: var(--radius-lg);
     padding: 14px 12px;
     display: flex;
     flex-direction: column;
-    gap: 0;
     transition: border-color var(--transition), background-color var(--transition);
 }
 
 .column.drag-over {
     border-color: var(--accent);
-    background-color: rgba(42, 225, 232, 0.06);
-    box-shadow: inset 0 0 0 1px rgba(42, 225, 232, 0.2);
+    background-color: var(--accent-soft);
+    box-shadow: inset 0 0 0 1px var(--accent-line);
 }
 
 .column-header {
@@ -119,14 +183,17 @@ main.board {
     align-items: center;
     justify-content: space-between;
     padding-bottom: 12px;
-    margin-bottom: 10px;
-    border-bottom: 2px solid var(--accent);
+    margin-bottom: 12px;
+    border-bottom: 1px solid var(--line);
 }
 
 .column-header h2 {
-    font-size: 0.9rem;
+    font-family: "Encode", sans-serif;
+    font-weight: 700;
+    font-size: 0.72rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
     color: var(--accent);
-    letter-spacing: 0.3px;
     line-height: 1.3;
 }
 
@@ -138,14 +205,15 @@ main.board {
 }
 
 .column-count {
-    background-color: rgba(42, 225, 232, 0.12);
+    background-color: var(--accent-soft);
     color: var(--accent);
-    border: 1px solid rgba(42, 225, 232, 0.25);
-    border-radius: 20px;
-    font-size: 0.72rem;
-    font-family: "TitelSchrift", sans-serif;
-    padding: 1px 9px;
-    min-width: 22px;
+    border: 1px solid var(--accent-line);
+    border-radius: 999px;
+    font-family: "Encode", sans-serif;
+    font-weight: 700;
+    font-size: 0.66rem;
+    padding: 2px 9px;
+    min-width: 24px;
     text-align: center;
 }
 
@@ -157,35 +225,35 @@ main.board {
     display: flex;
     align-items: center;
     justify-content: center;
-    opacity: 0.6;
+    opacity: 0.65;
     transition: opacity var(--transition), transform var(--transition);
     border-radius: 4px;
 }
 
 .add-btn:hover {
     opacity: 1;
-    transform: scale(1.2);
+    transform: scale(1.15);
 }
 
 .add-btn img {
     width: 17px;
     height: 17px;
-    filter: invert(75%) sepia(51%) saturate(1067%) hue-rotate(130deg) brightness(99%) contrast(92%);
+    filter: var(--icon-accent);
 }
 
 .column-cards {
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    gap: 9px;
     min-height: 70px;
     flex: 1;
 }
 
 .card {
-    background-color: rgba(40, 39, 42, 0.92);
-    border: 1px solid var(--border);
+    background-color: var(--surface-card);
+    border: 1px solid var(--line);
     border-radius: var(--radius);
-    padding: 11px 13px;
+    padding: 12px 13px;
     cursor: pointer;
     transition:
         border-color var(--transition),
@@ -193,15 +261,15 @@ main.board {
         transform var(--transition);
     display: flex;
     flex-direction: column;
-    gap: 9px;
+    gap: 10px;
     position: relative;
     user-select: none;
 }
 
 .card:hover {
-    border-color: var(--border-accent);
+    border-color: var(--accent-line);
     box-shadow: var(--shadow-accent);
-    transform: translateY(-1px);
+    transform: translateY(-2px);
 }
 
 .card.dragging {
@@ -213,7 +281,7 @@ main.board {
 .card-top {
     display: flex;
     align-items: flex-start;
-    gap: 7px;
+    gap: 8px;
 }
 
 .drag-handle {
@@ -232,8 +300,9 @@ main.board {
 }
 
 .card-title {
-    font-family: "TitelSchrift", sans-serif;
-    font-size: 0.92rem;
+    font-family: "Figtree", sans-serif;
+    font-weight: 600;
+    font-size: 0.94rem;
     line-height: 1.35;
     word-break: break-word;
     flex: 1;
@@ -242,23 +311,26 @@ main.board {
 .card-footer {
     display: flex;
     align-items: center;
-    gap: 7px;
+    gap: 8px;
     flex-wrap: wrap;
 }
 
 .card-anzahl {
-    font-size: 0.75rem;
+    font-family: "Encode", sans-serif;
+    font-size: 0.58rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
     color: var(--text-muted);
 }
 
 .prio-badge {
-    font-size: 0.65rem;
-    font-family: "TitelSchrift", sans-serif;
-    font-weight: bold;
+    font-family: "Encode", sans-serif;
+    font-weight: 700;
+    font-size: 0.6rem;
     padding: 2px 9px;
-    border-radius: 20px;
+    border-radius: 999px;
     text-transform: uppercase;
-    letter-spacing: 0.6px;
+    letter-spacing: 0.1em;
 }
 
 .prio-badge.high {
@@ -290,18 +362,29 @@ main.board {
     width: 15px;
     height: 15px;
     opacity: 0.55;
-    filter: invert(75%) sepia(51%) saturate(1067%) hue-rotate(130deg) brightness(99%) contrast(92%);
+    filter: var(--icon-accent);
+}
+
+.empty-hint {
+    font-family: "Encode", sans-serif;
+    font-size: 0.62rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text-faint);
+    text-align: center;
+    padding: 22px 8px;
+    pointer-events: none;
 }
 
 dialog {
-    background-color: var(--surface-solid);
-    border: 1px solid var(--border);
+    background-color: var(--surface);
+    border: 1px solid var(--line);
     border-radius: var(--radius-lg);
     padding: 28px 28px 24px;
     color: var(--text);
     width: 100%;
     max-width: 480px;
-    box-shadow: 0 24px 64px rgba(0, 0, 0, 0.6);
+    box-shadow: 0 28px 70px rgba(0, 0, 0, 0.65);
     position: fixed;
     top: 50%;
     left: 50%;
@@ -310,9 +393,9 @@ dialog {
 }
 
 dialog::backdrop {
-    background-color: rgba(0, 0, 0, 0.72);
-    backdrop-filter: blur(4px);
-    -webkit-backdrop-filter: blur(4px);
+    background-color: rgba(4, 15, 20, 0.78);
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
 }
 
 .dialog-header {
@@ -323,8 +406,9 @@ dialog::backdrop {
 }
 
 .dialog-header h3 {
-    font-size: 1.2rem;
-    color: var(--accent);
+    font-family: "Figtree-XB", sans-serif;
+    font-size: 1.3rem;
+    color: #fff;
 }
 
 .delete-btn {
@@ -358,61 +442,68 @@ dialog::backdrop {
 .form-group {
     display: flex;
     flex-direction: column;
-    gap: 6px;
+    gap: 7px;
 }
 
 .form-group label {
-    font-size: 0.78rem;
+    font-family: "Encode", sans-serif;
+    font-weight: 700;
+    font-size: 0.62rem;
     color: var(--text-muted);
     text-transform: uppercase;
-    letter-spacing: 0.8px;
+    letter-spacing: 0.16em;
 }
 
 .form-group input,
 .form-group textarea,
 .form-group select {
-    background-color: rgba(0, 0, 0, 0.3);
-    border: 1px solid var(--border);
+    background-color: var(--bg-2);
+    border: 1px solid var(--line);
     border-radius: var(--radius);
-    padding: 10px 13px;
+    padding: 11px 14px;
     color: var(--text);
-    font-family: "TextSchrift", sans-serif;
+    font-family: "Figtree", sans-serif;
     font-size: 0.95rem;
     outline: none;
     transition: border-color var(--transition), box-shadow var(--transition);
     width: 100%;
 }
 
+.form-group input::placeholder,
+.form-group textarea::placeholder {
+    color: var(--text-faint);
+}
+
 .form-group input:focus,
 .form-group textarea:focus,
 .form-group select:focus {
     border-color: var(--accent);
-    box-shadow: 0 0 0 2px rgba(42, 225, 232, 0.12);
+    box-shadow: 0 0 0 3px var(--accent-soft);
 }
 
 .form-group input.error {
     border-color: var(--prio-high);
-    box-shadow: 0 0 0 2px rgba(255, 77, 77, 0.12);
+    box-shadow: 0 0 0 3px rgba(255, 77, 77, 0.12);
 }
 
 .form-group select {
     appearance: none;
     -webkit-appearance: none;
     cursor: pointer;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='rgba(255,255,255,0.4)' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='rgba(238,248,250,0.5)' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
     background-repeat: no-repeat;
-    background-position: right 13px center;
-    padding-right: 36px;
+    background-position: right 14px center;
+    padding-right: 38px;
 }
 
 .form-group select option {
-    background-color: var(--surface-solid);
+    background-color: var(--surface);
     color: var(--text);
 }
 
 .form-group textarea {
     resize: vertical;
-    min-height: 90px;
+    min-height: 92px;
     line-height: 1.5;
 }
 
@@ -425,77 +516,75 @@ dialog::backdrop {
 .dialog-footer {
     display: flex;
     gap: 10px;
-    margin-top: 22px;
+    margin-top: 24px;
     justify-content: flex-end;
 }
 
 .btn-save {
     background-color: var(--accent);
-    color: var(--bg-dark);
-    border: none;
-    padding: 10px 26px;
+    color: var(--bg);
+    border: 1px solid var(--accent);
+    padding: 13px 28px;
     border-radius: var(--radius);
-    font-family: "TitelSchrift", sans-serif;
-    font-size: 0.95rem;
-    font-weight: bold;
+    font-family: "Encode", sans-serif;
+    font-weight: 700;
+    font-size: 0.72rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
     cursor: pointer;
-    transition: background-color var(--transition), transform var(--transition);
+    transition: background-color var(--transition), color var(--transition), transform var(--transition);
 }
 
 .btn-save:hover {
-    background-color: var(--accent-hover);
-    transform: scale(1.03);
+    background-color: #fff;
+    border-color: #fff;
+    transform: translateY(-1px);
 }
 
 .btn-cancel {
     background-color: transparent;
-    color: var(--text-muted);
-    border: 1px solid var(--border);
-    padding: 10px 20px;
+    color: var(--text);
+    border: 1px solid var(--line);
+    padding: 13px 22px;
     border-radius: var(--radius);
     cursor: pointer;
-    font-family: "TextSchrift", sans-serif;
-    font-size: 0.95rem;
-    transition: border-color var(--transition), color var(--transition);
+    font-family: "Encode", sans-serif;
+    font-weight: 700;
+    font-size: 0.72rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    transition: border-color var(--transition), color var(--transition), background-color var(--transition);
 }
 
 .btn-cancel:hover {
-    border-color: rgba(255, 255, 255, 0.4);
-    color: var(--text);
+    border-color: var(--accent);
+    color: var(--accent);
+    background-color: var(--accent-soft);
 }
 
 .toast {
     position: fixed;
     bottom: 24px;
     right: 24px;
-    background-color: var(--surface-solid);
-    border: 1px solid var(--border-accent);
+    background-color: var(--surface);
+    border: 1px solid var(--accent-line);
     border-radius: var(--radius);
-    padding: 11px 20px;
+    padding: 12px 20px;
     color: var(--text);
+    font-family: "Figtree", sans-serif;
     font-size: 0.88rem;
     z-index: 9999;
     transform: translateY(16px);
     opacity: 0;
     pointer-events: none;
-    transition: transform 0.3s ease, opacity 0.3s ease;
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+    transition: transform 0.3s var(--ease), opacity 0.3s var(--ease);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.5);
 }
 
 .toast.show {
     transform: translateY(0);
     opacity: 1;
 }
-
-.empty-hint {
-    font-size: 0.8rem;
-    color: rgba(255, 255, 255, 0.2);
-    text-align: center;
-    padding: 16px 8px;
-    pointer-events: none;
-}
-
-/* ---- Desktop: Mobile-Elemente ausblenden ---- */
 
 .bottom-nav {
     display: none;
@@ -505,10 +594,6 @@ dialog::backdrop {
     display: none;
 }
 
-/* ================================================================
-   MOBILE – Bottom Navigation Layout
-   ================================================================ */
-
 @media (max-width: 767px) {
 
     :root {
@@ -516,11 +601,11 @@ dialog::backdrop {
     }
 
     body {
-        padding-bottom: 60px;
+        padding-bottom: 62px;
     }
 
     .app-wrapper {
-        height: calc(100vh - var(--header-height) - 60px);
+        height: calc(100vh - var(--header-height) - 62px);
         overflow: visible;
         position: relative;
     }
@@ -528,8 +613,7 @@ dialog::backdrop {
     main.board {
         height: 100%;
         overflow-y: auto;
-        padding: 14px 12px;
-        padding-bottom: 16px;
+        padding: 16px 12px;
         align-items: stretch;
         width: 100%;
     }
@@ -545,8 +629,10 @@ dialog::backdrop {
     .column {
         display: none;
         min-width: 0;
+        max-width: 520px;
         flex: 1;
-        border-radius: var(--radius-lg);
+        width: 100%;
+        margin: 0 auto;
     }
 
     .column-header {
@@ -557,14 +643,10 @@ dialog::backdrop {
         display: flex;
         height: 100%;
         overflow-y: auto;
-        width: 100%;
-        max-width: 480px;
-        margin: 0 auto;
-        border-radius: var(--radius-lg);
     }
 
     .card {
-        padding: 14px 15px;
+        padding: 15px 16px;
     }
 
     .drag-handle {
@@ -573,14 +655,10 @@ dialog::backdrop {
 
     dialog {
         position: fixed;
-        top: auto;
-        bottom: auto;
-        left: 0;
-        right: 0;
-        margin-top: 10vh;
-        margin-left: auto;
-        margin-right: auto;
-        transform: none;
+        top: 10vh;
+        left: 50%;
+        transform: translateX(-50%);
+        margin: 0;
         width: calc(100% - 24px);
         max-width: 480px;
         border-radius: var(--radius-lg);
@@ -589,15 +667,12 @@ dialog::backdrop {
         overflow-y: auto;
     }
 
-    /* Toast über Bottom Nav */
     .toast {
-        bottom: 76px;
+        bottom: 78px;
         right: 12px;
         left: 12px;
         text-align: center;
     }
-
-    /* ---- Bottom Navigation ---- */
 
     .bottom-nav {
         display: flex;
@@ -605,11 +680,11 @@ dialog::backdrop {
         bottom: 0;
         left: 0;
         right: 0;
-        height: 60px;
-        background-color: rgb(40, 39, 42);
-        border-top: 1px solid var(--border);
+        height: 62px;
+        background-color: var(--bg-2);
+        border-top: 1px solid var(--line);
         z-index: 900;
-        box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.3);
+        box-shadow: 0 -4px 24px rgba(0, 0, 0, 0.4);
         pointer-events: all;
     }
 
@@ -619,13 +694,16 @@ dialog::backdrop {
         flex-direction: column;
         align-items: center;
         justify-content: center;
-        gap: 3px;
+        gap: 4px;
         background: none;
         border: none;
         cursor: pointer;
-        color: rgba(255, 255, 255, 0.35);
-        font-family: "TextSchrift", sans-serif;
-        font-size: 0.58rem;
+        color: var(--text-faint);
+        font-family: "Encode", sans-serif;
+        font-weight: 700;
+        font-size: 0.5rem;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
         position: relative;
         transition: color var(--transition);
         padding: 0;
@@ -644,18 +722,19 @@ dialog::backdrop {
     }
 
     .tab-btn.active img {
-        filter: invert(75%) sepia(51%) saturate(1067%) hue-rotate(130deg) brightness(99%) contrast(92%);
+        filter: var(--icon-accent);
     }
 
     .tab-badge {
         position: absolute;
         top: 5px;
-        right: calc(50% - 18px);
+        right: calc(50% - 20px);
         background-color: var(--accent);
-        color: var(--bg-dark);
-        border-radius: 20px;
-        font-size: 0.55rem;
-        font-family: "TitelSchrift", sans-serif;
+        color: var(--bg);
+        border-radius: 999px;
+        font-size: 0.52rem;
+        font-family: "Encode", sans-serif;
+        font-weight: 700;
         padding: 1px 5px;
         min-width: 16px;
         text-align: center;
@@ -667,15 +746,13 @@ dialog::backdrop {
         display: block;
     }
 
-    /* ---- FAB ---- */
-
     .fab {
         display: flex;
         position: fixed;
-        bottom: 76px;
-        right: 20px;
-        width: 52px;
-        height: 52px;
+        bottom: 78px;
+        right: 18px;
+        width: 54px;
+        height: 54px;
         border-radius: 50%;
         background-color: var(--accent);
         border: none;
@@ -683,19 +760,18 @@ dialog::backdrop {
         align-items: center;
         justify-content: center;
         z-index: 901;
-        box-shadow: 0 4px 18px rgba(42, 225, 232, 0.4);
+        box-shadow: 0 8px 24px rgba(42, 225, 232, 0.35);
         transition: transform var(--transition), background-color var(--transition);
         -webkit-tap-highlight-color: transparent;
     }
 
     .fab:active {
         transform: scale(0.93);
-        background-color: var(--accent-hover);
+        background-color: #fff;
     }
 
     .fab img {
         width: 22px;
         height: 22px;
-        filter: invert(0%);
     }
 }

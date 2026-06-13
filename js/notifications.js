@@ -6,28 +6,25 @@ async function initServiceWorker() {
     }
 
     try {
-        _swRegistration = await navigator.serviceWorker.register('./js/sw.js');
+        _swRegistration = await navigator.serviceWorker.register('./sw.js');
     } catch {
         return;
     }
 }
 
-export async function initNotifications() {
+async function requestNotificationPermission() {
     if (!('Notification' in window)) {
         return;
     }
 
-    if (Notification.permission === 'granted') {
-        await initServiceWorker();
-        return;
+    if (Notification.permission === 'default') {
+        await Notification.requestPermission();
     }
+}
 
-    if (Notification.permission !== 'denied') {
-        const permission = await Notification.requestPermission();
-        if (permission === 'granted') {
-            await initServiceWorker();
-        }
-    }
+export async function initNotifications() {
+    await initServiceWorker();
+    await requestNotificationPermission();
 }
 
 export function notify(title, body) {
@@ -71,6 +68,8 @@ export function getStatusNotification(order) {
     switch (status) {
         case 'in-arbeit':
             return { title: '🔧 In Arbeit', body: title };
+        case 'fertig-gedruckt':
+            return { title: '🖨️ Fertig gedruckt', body: title };
         case 'versand':
             return { title: '🚚 Versand', body: title };
         case 'abgeschlossen':

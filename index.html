@@ -10,6 +10,7 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <link rel="manifest" href="manifest.json">
     <link rel="icon" type="image/png" href="img/logo-cyber-d20.png">
+    <link rel="apple-touch-icon" href="img/logo-cyber-d20.png">
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="styles/header.css">
 </head>
@@ -43,6 +44,16 @@
                         </div>
                     </div>
                     <div class="column-cards" id="col-in-arbeit"></div>
+                </div>
+
+                <div class="column" id="column-fertig-gedruckt" data-status="fertig-gedruckt">
+                    <div class="column-header" data-col="fertig-gedruckt">
+                        <h2>Fertig gedruckt</h2>
+                        <div class="column-header-right">
+                            <span class="column-count" id="count-fertig-gedruckt">0</span>
+                        </div>
+                    </div>
+                    <div class="column-cards" id="col-fertig-gedruckt"></div>
                 </div>
 
                 <div class="column" id="column-versand" data-status="versand">
@@ -79,6 +90,11 @@
             <img src="img/icons/gear.svg" alt="In Arbeit">
             <span>In Arbeit</span>
             <span class="tab-badge" id="badge-in-arbeit"></span>
+        </button>
+        <button class="tab-btn" data-col="fertig-gedruckt">
+            <img src="img/icons/printer.svg" alt="Fertig gedruckt">
+            <span>Gedruckt</span>
+            <span class="tab-badge" id="badge-fertig-gedruckt"></span>
         </button>
         <button class="tab-btn" data-col="versand">
             <img src="img/icons/truck.svg" alt="Versand">
